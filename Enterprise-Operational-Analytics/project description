@@ -1,284 +1,228 @@
-Enterprise Operational Analytics System
-Multi-Unit Performance, Compliance & Workflow Intelligence
-1. Project Overview
+# 🚀 Enterprise Operational Analytics System  
+### Multi-Unit Performance, Compliance & Workflow Intelligence
 
-This project represents the design and implementation of a multi-unit enterprise operational analytics system built using Power BI and dimensional modeling principles.
+---
 
-The objective was to transform fragmented operational Excel-based reporting into a structured, scalable analytical model capable of delivering executive-level insights across four operational units and multiple internal systems.
+## 📌 Project Overview
 
-The solution integrates:
+This project represents the end-to-end design and implementation of a **multi-unit enterprise operational analytics system** built using Power BI and dimensional modeling principles.
 
-Operational workflows
+The objective was to transform fragmented Excel-based operational reporting into a **structured, scalable analytical model** capable of delivering executive-level insights across multiple units and systems.
 
-Approval systems
+This solution integrates operational workflows, compliance tracking, investigations, attendance, and system monitoring into a unified BI architecture.
 
-Compliance monitoring (FRA, SAREQ, QA)
+---
 
-Investigation tracking
+## 🏢 Business Context
 
-Attendance data
+The simulated organization operates across:
 
-Pending system monitoring
-
-Role-based performance metrics
-
-2. Business Context
-
-The organization operates across:
-
-4 operational units
-
-5 internal systems
-
-3 user roles (Maker, Approval, Outsource)
-
-40 total users
+- **4 Operational Units**
+- **5 Internal Systems**
+- **3 Core Roles** (Maker, Approval, Outsource)
+- **40 Total Users**
 
 The business required:
 
-Unified performance tracking
+- Unified performance tracking
+- Pass / Fail / Return / Investigate monitoring
+- Vendor & NPDD compliance oversight
+- Unit-level comparison
+- Attendance vs productivity tracking
+- Pending workload visibility
+- Executive-level reporting dashboard
 
-Pass/Fail/Return/Investigate monitoring
+The original data existed in wide Excel sheets with mixed granularity and no centralized structure, limiting scalability and analytical depth.
 
-Vendor & NPDD compliance oversight
+---
 
-Unit comparison
+## 🧠 Data Architecture & Modeling
 
-Productivity measurement
+### 📊 Dimensional Model (Star Schema)
 
-Risk visibility
+The model was redesigned using proper dimensional modeling principles to ensure scalability and performance.
 
-Executive summary reporting
+### 🔹 Dimension Tables
 
-The existing structure relied on wide-format Excel sheets with mixed granularity and no centralized data model.
+- `Users` (user_id, name, role, unit)
+- `Systems` (system_id, system_name)
+- `Calendar` (date, month, day_name)
+- `Status` (Pass, Failed, Pass REF, Failed REF, Investigate)
 
-3. Data Architecture & Modeling
-Dimensional Model (Star Schema)
+### 🔹 Fact Tables
 
-The model was redesigned using proper dimensional modeling principles.
+- Unit 1 – Daily Task Completion
+- Unit 2 – Daily CA1 Workflow Metrics
+- Unit 2 – Monthly SAREQ / NPDD Compliance Metrics
+- Unit 2 – Requests (Daily & Monthly)
+- Unit 3 – Workflow & Investigation Tracking
+- Unit 4 – Achieved Tasks
+- Attendance Tracking
+- Pending System Monitoring
 
-Dimension Tables:
+### 🔹 Key Modeling Decisions
 
-Users (user_id, role, unit, approval role indicator)
+- Defined clear data grain (daily where possible)
+- Converted wide Excel structures into normalized format
+- Centralized calendar dimension for consistent filtering
+- Avoided many-to-many relationships
+- Separated operational metrics from compliance metrics
+- Designed for future SQL integration
 
-Systems (system_id, system_name)
+The ERD reflects controlled one-to-many relationships between dimensions and fact tables, ensuring model stability and performance.
 
-Calendar (date, month, day name)
+---
 
-Status (Pass, Failed, Pass REF, Failed REF, Investigate)
+## 📈 KPI Engineering (DAX Layer)
 
-Fact Tables:
+All performance indicators were implemented using **DAX measures**, not calculated columns, to maintain dynamic filtering and aggregation flexibility.
 
-Unit 1 Performance (daily task completion)
+### 🔹 Core KPIs
 
-Unit 2 Daily CA1 (operational workflow metrics)
+- Total Users
+- Total Units
+- Total Roles
+- Total Systems
+- Total Cases
+- Total Achieved
+- Total Pending
 
-Unit 2 Monthly SAREQ / NPDD (compliance metrics)
+### 🔹 Operational Performance KPIs
 
-Requests for Unit 2 (daily & monthly)
+- Average Completion by Task
+- Total Completion by Name
+- Total Pending by Name
+- Total Cases by User
+- Total Requests by User Type (Maker vs Outsource)
 
-Unit 3 Workflow / Investigation
+### 🔹 Compliance & QA KPIs
 
-Unit 4 Achieved Tasks
+- Vendor Approved / Rejected / Return
+- NPDD Approved / Rejected / Return
+- QA Monitoring Metrics
+- KPI Past Due Tracking
+- Deferral Monitoring
 
-Attendance (daily employee status)
+### 🔹 Risk & Investigation Metrics
 
-Pending System tracking
+- Investigation Volume
+- Failed vs Failed REF
+- Weighted Risk Score
+- Status Distribution Analysis
 
-Key modeling decisions:
+### 🔹 Advanced DAX Techniques Used
 
-Clearly defined data grain (daily transactional level where possible)
+- `CALCULATE`
+- `DIVIDE`
+- `RANKX`
+- Context transition & filter context control
+- Aggregation across multiple fact tables
 
-Separated monthly compliance metrics from daily operational metrics
+---
 
-Avoided many-to-many relationships
+## 📊 Dashboard Design
 
-Centralized user and calendar dimensions
+The dashboard is structured into executive-ready analytical sections:
 
-Created scalable system-based filtering
+### 🟢 Executive Summary Layer
 
-The ERD reflects controlled 1-to-many relationships between dimension and fact tables, ensuring performance and scalability.
+- Total Users
+- Total Units
+- Total Roles
+- Total Systems
+- High-level performance indicators
+- Role-based distribution
 
-4. KPI Engineering (DAX Layer)
+### 🟡 Unit-Level Analysis
 
-A structured KPI framework was implemented using DAX measures instead of calculated columns.
+- Unit 1: Average Completion by Task
+- Unit 2: Total Cases & User Filtering
+- Unit 3: Pending & Comments Monitoring
+- Unit 4: Total Achieved by System
 
-Core Operational KPIs:
+### 🔵 Performance Analytics
 
-Total Users
+- Completion by Name
+- Pending by Name
+- Case Distribution by User
+- Request Type Breakdown
+- Status Distribution (Pass, Pass REF, Investigate, Failed, Failed REF)
 
-Total Units
+The dashboard supports:
 
-Total Systems
+- Day-level filtering
+- Month-level filtering
+- System-based filtering
+- User drill-down
+- Unit comparison
 
-Total Cases
+---
 
-Total Achieved
+## 🛠 Technical Stack
 
-Total Pending
+- Excel (Data Structuring & Cleaning)
+- Power Query (Transformation & Normalization)
+- Power BI (Data Modeling & Visualization)
+- DAX (Measure Engineering)
+- Dimensional Modeling Principles
 
-Performance KPIs:
+---
 
-Average Completion by Task
+## 🔍 Key Improvements Implemented
 
-Total Completion by Name
+During development, the following architectural enhancements were made:
 
-Total Pending by Name
+- Unified fragmented tables into structured fact tables
+- Standardized status tracking (Pass / Failed / Investigate)
+- Introduced system-based classification
+- Integrated attendance with productivity analysis
+- Reduced cross-filter ambiguity
+- Designed scalable model architecture
+- Separated daily vs monthly metric layers
 
-Total Cases by User
+---
 
-Total Requests by User Type (Maker vs Outsource)
+## 💼 Business Value Simulation
 
-Compliance KPIs:
+The system enables:
 
-Vendor Approved / Rejected / Return
+- Identification of high-risk users
+- Unit-level performance benchmarking
+- Vendor & NPDD compliance visibility
+- Investigation trend detection
+- Early identification of workload bottlenecks
+- Executive-ready performance reporting
 
-NPDD Approved / Rejected / Return
+---
 
-QA Monitoring Counts
-
-KPI Past Due Tracking
-
-Deferral Monitoring
-
-Risk Metrics:
-
-Investigation Volume
-
-Failed vs Failed REF
-
-Weighted Risk Indicators
-
-Status Distribution Analysis
-
-Advanced DAX techniques used:
-
-CALCULATE
-
-DIVIDE (safe division)
-
-RANKX (user ranking)
-
-Context-based filtering
-
-Aggregation over multiple fact tables
-
-5. Dashboard Design
-
-The dashboard was structured into logical executive blocks:
-
-Executive Summary Layer
-
-Total Users
-
-Total Units
-
-Total Roles
-
-Total Systems
-
-Role-based breakdown
-
-High-level performance indicators
-
-Unit-Level Analysis
-
-Unit 1: Average Completion by Task
-
-Unit 2: Total Cases & User Filtering
-
-Unit 3: Pending & Comments Monitoring
-
-Unit 4: Total Achieved by System
-
-Performance Analytics
-
-Completion by Name
-
-Pending by Name
-
-Case Distribution by User
-
-Request Type Distribution
-
-Status Breakdown (Pass, Pass REF, Investigate, Failed, Failed REF)
-
-The design allows:
-
-Day filtering
-
-Month filtering
-
-System filtering
-
-User-level drill-down
-
-Unit-level comparison
-
-6. Key Improvements Made During Development
-
-During development, several architectural improvements were implemented:
-
-Converted wide Excel sheets into structured fact tables
-
-Unified Pass/Failed/Investigate into standardized status metrics
-
-Introduced system-level classification
-
-Integrated attendance with productivity tracking
-
-Implemented centralized date filtering
-
-Separated volume metrics from compliance metrics
-
-Designed model to support future SQL backend integration
-
-7. Business Value Simulation
-
-This system enables:
-
-Identification of high-risk users
-
-Unit-level performance comparison
-
-Compliance monitoring across Vendor and NPDD workflows
-
-Early detection of investigation spikes
-
-Visibility into pending workload
-
-Role-based productivity analysis
-
-Executive-ready reporting
-
-8. Technical Stack
-
-Excel (initial structuring)
-
-Power Query (data transformation & normalization)
-
-Power BI (data modeling & visualization)
-
-DAX (measure engineering)
-
-Dimensional Modeling principles
-
-9. What This Project Demonstrates
+## 🎯 What This Project Demonstrates
 
 This project demonstrates:
 
-Strong understanding of data modeling principles
+- Strong understanding of data modeling fundamentals
+- Ability to design scalable BI architecture
+- KPI engineering capability
+- Multi-table relationship management
+- Analytical problem-solving
+- Executive dashboard design thinking
+- Enterprise-level BI mindset
 
-Ability to move from raw Excel to enterprise-ready BI model
+This is not just a dashboard — it is a structured operational analytics system.
 
-KPI engineering mindset
+---
 
-Multi-table relationship management
+## 🔮 Future Enhancements
 
-Analytical problem solving
+- SQL backend integration
+- Automated ETL pipeline
+- Role-based row-level security
+- Predictive rejection risk modeling
+- SLA breach forecasting
 
-Executive dashboard design
+---
 
-Scalability-focused architecture thinking
+## 🔁 End-to-End Process
 
-This is not just a dashboard — it is a structured enterprise analytics system.
+**Database Design → Data Modeling → KPI Engineering → BI Implementation → Executive Reporting**
+
+---
